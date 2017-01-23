@@ -1,4 +1,4 @@
-# Copyright ⓒ  2017 Red Hat, Inc.
+# Copyright (c) 2017 Red Hat, Inc.
 # This file is part of sse2fedmsg.
 #
 # fegistry is free software: you can redistribute it and/or modify
