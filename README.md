@@ -17,7 +17,7 @@ $ sse2fedmsg <topic> <feed>
 
 For example:
 ```
-$ sse2fedmsg libraryio http://firehose.libraries.io/events
+$ sse2fedmsg librariesio http://firehose.libraries.io/events
 ```
 
 ## Development
