@@ -24,7 +24,7 @@ with open(os.path.join(here, 'README.md')) as fd:
 
 setup(
     name='sse2fedmsg',
-    version='0.1.0',
+    version='0.1.1',
     description='Turn Server-Sent Events into fedmsgs.',
     long_description=README,
     license='GPLv2+',
@@ -36,7 +36,7 @@ setup(
     packages=find_packages(exclude=('sse2fedmsg.tests', 'sse2fedmsg.tests.*')),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['fedmsg', 'sseclient'],
+    install_requires=['fedmsg[commands,consumers]', 'sseclient'],
     extras_require={
         'secure': ['fedmsg[crypto]']
     },
