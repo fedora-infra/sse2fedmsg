@@ -16,17 +16,23 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
 # USA.
 """
-sse2fedmsg is a simple wrapper around `sseclient <https://pypi.python.org/pypi/sseclient/>`_
-that publishes messages to a ZeroMQ messaging infrastructure via
-`fedmsg <http://www.fedmsg.com>`_.
+sse2fedmsg is a simple wrapper around `sseclient`_ that publishes messages to a
+ZeroMQ messaging infrastructure via `fedmsg`_.
+
+.. _fedmsg: http://www.fedmsg.com
+.. _sseclient: https://pypi.python.org/pypi/sseclient/
 """
 from __future__ import absolute_import, unicode_literals, print_function
 
 import argparse
+import logging
 import json
 
 from sseclient import SSEClient
 import fedmsg
+
+
+_log = logging.getLogger(__name__)
 
 
 __version__ = '0.1.0'
@@ -54,18 +60,19 @@ class Sse2Fedmsg(object):
         This call is blocking and will continue until the underlying TCP
         connection is closed.
         """
-        print('Starting Server-Sent Events client for ', self.feed)
+        _log.info('Starting Server-Sent Events client for ', self.feed)
         sse_stream = SSEClient(self.feed)
         for sse_message in sse_stream:
             # If the server sends too many newlines the client can generate
             # messages that are completely empty, so we filter those here.
             if sse_message.data:
                 msg = self.process_message(sse_message)
-                print('Received message from SSE: ', msg)
+                _log.debug('Received message from SSE: %s', msg)
                 try:
                     fedmsg.publish(self.topic, msg)
                 except Exception as err:
-                    print('Fatal error publishing: ', err)
+                    _log.exception('Fatal error publishing %s to %s: %s', msg,
+                                   self.topic, err)
 
     @staticmethod
     def process_message(sse_message):
