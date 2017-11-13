@@ -52,6 +52,11 @@ class Sse2Fedmsg(object):
     def __init__(self, topic, feed):
         self.feed = feed
         self.topic = topic
+        try:
+            fedmsg.init()
+        except ValueError:
+            # Indicates fedmsg is already initialized
+            pass
 
     def run(self):
         """
