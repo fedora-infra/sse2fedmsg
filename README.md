@@ -28,6 +28,8 @@ run it in the background:
 $ fedmsg-relay --config-filename fedmsg.d/fedmsg-config.py &
 ```
 
+Messages are published by the relay using TCP on port 9940 via all interfaces.
+
 Next, tail fedmsg:
 ```
 $ fedmsg-tail --config fedmsg.d/fedmsg-config.py --no-validate --really-pretty
