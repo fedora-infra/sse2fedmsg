@@ -24,7 +24,7 @@ with open(os.path.join(here, 'README.md')) as fd:
 
 setup(
     name='sse2fedmsg',
-    version='0.2.0',
+    version='0.3.0',
     description='Turn Server-Sent Events into fedmsgs.',
     long_description=README,
     license='GPLv2+',
