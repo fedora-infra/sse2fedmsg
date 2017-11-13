@@ -35,7 +35,7 @@ import fedmsg
 _log = logging.getLogger(__name__)
 
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __author__ = 'The Fedora Infrastructure Team'
 
 
@@ -60,7 +60,7 @@ class Sse2Fedmsg(object):
         This call is blocking and will continue until the underlying TCP
         connection is closed.
         """
-        _log.info('Starting Server-Sent Events client for ', self.feed)
+        _log.info('Starting Server-Sent Events client for %s', self.feed)
         sse_stream = SSEClient(self.feed)
         for sse_message in sse_stream:
             # If the server sends too many newlines the client can generate
@@ -105,7 +105,10 @@ def main():
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument('topic', help='The ØMQ topic suffix to use')
     parser.add_argument('feed', help='The SSE feed URL (e.g. http://firehose.libraries.io/events)')
+    parser.add_argument('--logging', help='The log level to use', default='INFO')
 
     args = parser.parse_args()
+    logging.basicConfig(level=args.logging)
+    _log.info('Publishing messages from %r with the %r topic', args.feed, args.topic)
     client = Sse2Fedmsg(args.topic, args.feed)
     client.run()
